@@ -1,11 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environments';
+
+declare const google: any;
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  standalone: true,
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrls: ['./login.scss']
 })
-export class Login {
+export class Login implements OnInit {
 
+  ngOnInit() {
+    google.accounts.id.initialize({
+      client_id: environment.googleClientId,
+      callback: this.handleCredentialResponse.bind(this)
+    });
+
+    google.accounts.id.renderButton(
+      document.querySelector('.g_id_signin'),
+      { theme: 'outline', size: 'large' }
+    );
+  }
+
+  handleCredentialResponse(response: any) {
+    const credential = response.credential;
+    console.log('Google ID Token:', credential);
+    // TODO: send to backend for session validation
+  }
 }
