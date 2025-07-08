@@ -1,0 +1,9 @@
+<mat-toolbar color="primary">
+  <span>Content Planner</span>
+  <span class="spacer">  </span>
+  <button mat-button routerLink="/timeline">Timeline</button>
+  <button mat-button routerLink="/submit">Submit Post</button>
+  <button mat-button routerLink="/approvals">Approvals</button>
+  <button mat-button routerLink="/login" [@if]="!userEmail">Login</button>
+  <button mat-button (click)="signOut()" [@if]="userEmail">Logout ({{userEmail}})</button>
+</mat-toolbar>
